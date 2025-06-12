@@ -5,9 +5,10 @@ Let’s break down and illuminate the meaning, structure, and implications of yo
 # Fractal Analysis of the Meta-Optimization Equation
 
 **Equation:**
-\[
+
+$$
 \Psi(x) = \int \big[\, \alpha(t) S(x) + (1-\alpha(t)) N(x) \,\big] \times \exp\!\big(-[\lambda_1 R_{\text{cognitive}} + \lambda_2 R_{\text{efficiency}}]\big) \times P(H|E,\beta)\; dt
-\]
+$$
 
 ---
 

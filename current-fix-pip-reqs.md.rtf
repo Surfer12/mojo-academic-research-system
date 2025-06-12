@@ -1,0 +1,146 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2822
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fnil\fcharset0 Menlo-Bold;\f1\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;\red13\green102\blue2;\red0\green0\blue0;\red251\green2\blue7;
+\red101\green1\blue3;}
+{\*\expandedcolortbl;;\csgenericrgb\c5252\c39988\c944;\cssrgb\c0\c0\c0;\cssrgb\c100000\c14913\c0;
+\csgenericrgb\c39450\c289\c1097;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\pardirnatural\partightenfactor0
+
+\f0\b\fs58 \cf2 \cb3 \CocoaLigature0 ### What happened?
+\f1\b0 \cf4 \
+\
+\cf5 1
+\f0\b \cf2 .
+\f1\b0 \cf5  You are running Python 
+\f0\b \cf2 **3.13**
+\f1\b0 \cf5  (the development / pre-release series).  \cf4 \
+\cf5 2
+\f0\b \cf2 .
+\f1\b0 \cf5  `pip` tries to build 
+\f0\b \cf2 **statsmodels**
+\f1\b0 \cf5  from source because there is 
+\f0\b \cf2 **no pre-built wheel for Python 3.13**
+\f1\b0 \cf5  yet.  \cf4 \
+\cf5 3
+\f0\b \cf2 .
+\f1\b0 \cf5  While Cythonising the `linbin.pyx` file, the build chain hits code that is 
+\f0\b \cf2 **not yet compatible with Python 3.13**
+\f1\b0 \cf5 , and Cython raises a `CompileError`.  \cf4 \
+\cf5 4
+\f0\b \cf2 .
+\f1\b0 \cf5  The build therefore aborts during the \'93get-requires-for-build-wheel\'94 step and `pip` prints the scary \'93subprocess-exited-with-error\'94 message.\cf4 \
+\
+
+\f0\b \cf2 ### Why it isn\'92t (necessarily) your fault
+\f1\b0 \cf4 \
+\
+\cf5 \'95 Statsmodels 0.14/0.15 is officially tested up to Python 3.12.  \cf4 \
+\cf5 \'95 Python 3.13 is still in alpha/beta, so almost every scientific-Python project (NumPy, SciPy, Cython, statsmodels, \'85) is still adding support.  \cf4 \
+\cf5 \'95 Until the whole stack publishes wheels for 3.13, `pip` will always fall back to building 
+\f0\b \cf2 **from source**
+\f1\b0 \cf5  and you will hit compiler-level breakage like the one you saw.\cf4 \
+\
+\cf5 ---\cf4 \
+\
+
+\f0\b \cf2 ## Quick ways to solve / work around
+\f1\b0 \cf4 \
+\
+\cf5 | Option | What to do | Pros | Cons |\cf4 \
+\cf5 | --- | --- | --- | --- |\cf4 \
+\cf5 | 1. Use a stable Python (3.12 or 3.11) | 
+\f0\b \cf2 \ul \ulc2 ```
+\f1\b0 \cf5 \ulnone bash\cf4 \
+\cf5 pyenv install 3.12.3   # or use Conda/micromamba\cf4 \
+\cf5 pyenv virtualenv 3.12.3 stats-env\cf4 \
+\cf5 pyenv activate stats-env\cf4 \
+\cf5 pip install statsmodels\cf4 \
+
+\f0\b \cf2 \ul ```
+\f1\b0 \cf5 \ulnone  | Works immediately, binary wheels available | You lose 3.13-specific features (for now) |\cf4 \
+\cf5 | 2. Install the 
+\f0\b \cf2 **nightly build**
+\f1\b0 \cf5  of NumPy/SciPy/statsmodels that already targets 3.13 (if available) | 
+\f0\b \cf2 \ul ```
+\f1\b0 \cf5 \ulnone bash\cf4 \
+\cf5 pip install --pre --extra-index-url \ul \ulc5 https://pypi.anaconda.org/scientific-python-nightly-wheels/simple\ulnone  numpy scipy\cf4 \
+\cf5 pip install git+\ul https://github.com/statsmodels/statsmodels.git\cf4 \ulnone \
+
+\f0\b \cf2 \ul \ulc2 ```
+\f1\b0 \cf5 \ulnone  | Lets you stay on 3.13 | Nightly wheels change daily; may still break |\cf4 \
+\cf5 | 3. Patch-build locally (advanced) | Clone statsmodels, upgrade Cython & numpy-dev, fix offending `.pyx`, then `pip install -e .` | Full control | You own the maintenance burden |\cf4 \
+\
+\cf5 For 99 % of users, 
+\f0\b \cf2 **Option 1**
+\f1\b0 \cf5  (switching to 3.12/3.11) is the fastest path.\cf4 \
+\
+\cf5 ---\cf4 \
+\
+
+\f0\b \cf2 ## Step-by-step: create a 3.12 environment and install statsmodels
+\f1\b0 \cf4 \
+\
+\cf5 ```
+\f0\b \cf2 bash
+\f1\b0 \cf4 \
+\cf5 # 1. Install Python 3.12 if you don\'92t have it\cf4 \
+\cf5 brew install pyenv            # macOS example\cf4 \
+\cf5 pyenv install 3.12.3\cf4 \
+\
+\cf5 # 2. Create and activate an isolated virtual environment\cf4 \
+\cf5 pyenv virtualenv 3.12.3 statsmodels-env\cf4 \
+\cf5 pyenv activate statsmodels-env\cf4 \
+\
+\cf5 # 3. Upgrade pip & install scientific stack\cf4 \
+\cf5 pip install --upgrade pip\cf4 \
+\cf5 pip install numpy scipy pandas matplotlib statsmodels\cf4 \
+\cf5 ```\cf4 \
+\
+\cf5 Now open Python and check:\cf4 \
+\
+\cf5 ```
+\f0\b \cf2 python
+\f1\b0 \cf4 \
+\cf5 import statsmodels, sys\cf4 \
+\cf5 print(statsmodels.__version__)  # should be 0.14.x or 0.15.x\cf4 \
+\cf5 print(sys.version)\cf4 \
+\cf5 ```\cf4 \
+\
+\cf5 ---\cf4 \
+\
+
+\f0\b \cf2 ## If you must stay on Python 3.13
+\f1\b0 \cf4 \
+\
+\cf5 1
+\f0\b \cf2 .
+\f1\b0 \cf5  
+\f0\b \cf2 **Upgrade toolchain**
+\f1\b0 \cf5 :  \cf4 \
+\cf5    ```
+\f0\b \cf2 bash
+\f1\b0 \cf4 \
+\cf5    pip install --upgrade "Cython>=3.0" numpy-dev scipy-dev\cf4 \
+\cf5    ```\cf4 \
+\cf5 2
+\f0\b \cf2 .
+\f1\b0 \cf5  Clone statsmodels master and build in place:  \cf4 \
+\cf5    ```
+\f0\b \cf2 bash
+\f1\b0 \cf4 \
+\cf5    git clone https://github.com/statsmodels/statsmodels.git\cf4 \
+\cf5    cd statsmodels\cf4 \
+\cf5    pip install -e .[dev]\cf4 \
+\cf5    ```\cf4 \
+\cf5 3
+\f0\b \cf2 .
+\f1\b0 \cf5  Be prepared to open issues / submit patches; you are on bleeding edge.\cf4 \
+\
+\cf5 ---\cf4 \
+\
+
+\f0\b \cf2 ### TL;DR
+\f1\b0 \cf4 \
+\
+\cf5 Statsmodels (and parts of SciPy / Cython) aren\'92t ready for Python 3.13 yet. Switch to Python 3.12 or below\'97or use pre-release/nightly wheels\'97until the scientific-Python ecosystem finishes its 3.13 migration.}
