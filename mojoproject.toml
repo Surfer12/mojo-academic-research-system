@@ -1,0 +1,56 @@
+[project]
+name = "academic-research-workflow"
+version = "0.1.0"
+description = "A comprehensive research workflow assistance system for academic publications with ethical safeguards"
+authors = ["Research Workflow Team"]
+license = "Academic Use Only"
+mojo-version = ">=0.7.0"
+
+[dependencies]
+python = ">=3.8"
+tensor = "latest"
+algorithm = "latest"
+collections = "latest"
+utils = "latest"
+
+[build]
+target = "executable"
+optimization-level = 2
+debug-symbols = true
+parallel-compilation = true
+
+[features]
+pattern-matching = ["academic_research_workflow", "pattern_matcher"]
+validation = ["validation_system", "research_config"]
+ethics-compliance = ["academic_research_workflow", "research_config"]
+full = ["pattern-matching", "validation", "ethics-compliance"]
+
+[targets]
+main = "academic_research_workflow.mojo"
+example = "example_usage.mojo"
+
+[metadata]
+keywords = ["academic", "research", "workflow", "cognitive-science", "ethics", "peer-review"]
+categories = ["research-tools", "academic-software", "workflow-automation"]
+documentation = "README.md"
+repository = "https://github.com/research-workflow/mojo-academic-system"
+homepage = "https://research-workflow.org"
+
+[package]
+include = [
+    "*.mojo",
+    "README.md",
+    "LICENSE"
+]
+exclude = [
+    "*.pyc",
+    "__pycache__",
+    ".git",
+    ".vscode"
+]
+
+[scripts]
+test = "mojo test --verbose"
+build = "mojo build --release"
+run-example = "mojo run example_usage.mojo"
+check = "mojo check --strict"

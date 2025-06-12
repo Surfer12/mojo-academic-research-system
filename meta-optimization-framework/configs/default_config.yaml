@@ -1,0 +1,233 @@
+# Meta-Optimization Framework Default Configuration
+# This file contains the default parameters for the cognitive-inspired optimization framework
+
+# Framework metadata
+framework:
+  name: "meta-optimization-framework"
+  version: "0.1.0"
+  author: "Ryan Oates"
+  institution: "University of California, Santa Barbara"
+
+# Core optimization parameters
+optimization:
+  # Target performance metrics
+  targets:
+    accuracy_improvement: 0.19  # 19% target improvement
+    accuracy_tolerance: 0.08    # ±8% tolerance
+    confidence_level: 0.95      # 95% confidence interval
+    efficiency_gain: 0.12       # 12% efficiency target
+    efficiency_tolerance: 0.04  # ±4% tolerance
+    cognitive_load_reduction: 0.22  # 22% cognitive load reduction
+    cognitive_tolerance: 0.05   # ±5% tolerance
+
+  # Algorithm parameters
+  algorithm:
+    max_iterations: 1000
+    convergence_threshold: 1e-6
+    learning_rate: 0.01
+    momentum: 0.9
+    weight_decay: 1e-4
+
+  # Dynamic integration parameters (α)
+  dynamic_integration:
+    initial_alpha: 0.5
+    min_alpha: 0.1
+    max_alpha: 0.9
+    adaptation_rate: 0.01
+    stability_threshold: 0.05
+
+  # Cognitive regularization parameters (λ₁, λ₂)
+  cognitive_regularization:
+    lambda_1: 0.1  # Cognitive authenticity weight
+    lambda_2: 0.1  # Computational efficiency weight
+    min_lambda: 0.01
+    max_lambda: 1.0
+    adaptation_sensitivity: 0.05
+
+  # Bias modeling parameters (β)
+  bias_modeling:
+    initial_beta: 1.0
+    min_beta: 0.1
+    max_beta: 2.0
+    adaptation_rate: 0.02
+
+# Cognitive constraints
+cognitive_constraints:
+  # Working memory (Miller's 7±2 rule)
+  memory_capacity: 7
+  memory_tolerance: 2
+  
+  # Attention constraints
+  attention_threshold: 0.7
+  attention_decay: 0.95
+  
+  # Processing speed constraints
+  max_complexity: 1.0
+  processing_time_limit: 5.0  # seconds
+  
+  # Authenticity requirements
+  target_authenticity: 0.8
+  min_authenticity: 0.6
+  
+  # Expected cognitive biases
+  expected_biases:
+    confirmation: 0.3
+    anchoring: 0.25
+    availability: 0.2
+    overconfidence: 0.15
+
+# Computational efficiency constraints
+efficiency_requirements:
+  max_flops: 1e9        # Maximum floating point operations
+  max_memory: 1e6       # Maximum memory usage (bytes)
+  max_complexity: 1.0   # Maximum computational complexity
+  target_speedup: 1.2   # Target speedup factor
+  energy_budget: 100.0  # Energy consumption budget (watts)
+
+# Task specifications
+tasks:
+  # N-back working memory task
+  n_back:
+    batch_size: 32
+    sequence_length: 20
+    n_back: 2
+    feature_dim: 128
+    match_probability: 0.3
+    difficulty_levels: [1, 2, 3, 4]
+    
+  # Stroop interference task
+  stroop:
+    batch_size: 32
+    sequence_length: 10
+    feature_dim: 64
+    conflict_probability: 0.5
+    response_time_limit: 2.0
+    
+  # Planning task
+  planning:
+    batch_size: 32
+    sequence_length: 15
+    feature_dim: 64
+    goal_complexity: 3
+    max_steps: 10
+    
+  # Pattern recognition task
+  pattern_recognition:
+    batch_size: 32
+    sequence_length: 12
+    feature_dim: 64
+    pattern_length: 4
+    noise_level: 0.1
+
+# Neural network architectures
+neural_networks:
+  # Working memory network
+  working_memory:
+    input_size: 128
+    hidden_sizes: [256, 128, 64]
+    output_size: 1
+    dropout: 0.2
+    activation: "relu"
+    
+  # Attention network
+  attention:
+    input_size: 128
+    num_heads: 8
+    hidden_dim: 256
+    dropout: 0.1
+    
+  # Executive control network
+  executive:
+    input_size: 128
+    hidden_sizes: [512, 256, 128]
+    output_size: 64
+    batch_norm: true
+    dropout: 0.3
+
+# Statistical analysis configuration
+statistics:
+  alpha: 0.05  # Significance level
+  power: 0.8   # Statistical power
+  effect_size_thresholds:
+    small: 0.2
+    medium: 0.5
+    large: 0.8
+  bootstrap_samples: 10000
+  confidence_levels: [0.90, 0.95, 0.99]
+
+# Data processing configuration
+data_processing:
+  normalization: "z_score"  # Options: z_score, min_max, robust
+  augmentation_factor: 2
+  noise_types: ["gaussian", "uniform", "salt_pepper"]
+  noise_levels: [0.05, 0.1, 0.15, 0.2]
+  train_split: 0.7
+  val_split: 0.15
+  test_split: 0.15
+  stratify: true
+
+# Visualization configuration
+visualization:
+  style: "seaborn"
+  figure_size: [12, 8]
+  dpi: 300
+  color_palette: "husl"
+  save_format: "png"
+  save_quality: 95
+  interactive: true
+
+# Logging configuration
+logging:
+  level: "INFO"  # Options: DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file_output: true
+  console_output: true
+  log_directory: "logs"
+  max_file_size: "10MB"
+  backup_count: 5
+
+# Failure documentation configuration
+failure_documentation:
+  auto_save: true
+  storage_path: "docs/failure_museum"
+  severity_levels: ["low", "medium", "high", "critical"]
+  max_failures: 1000
+  cleanup_interval: 30  # days
+  pattern_analysis: true
+
+# Experiment tracking configuration
+experiment_tracking:
+  enabled: true
+  backend: "wandb"  # Options: wandb, mlflow, tensorboard
+  project_name: "meta-optimization-framework"
+  save_artifacts: true
+  log_frequency: 10  # iterations
+  
+# Hardware configuration
+hardware:
+  device: "auto"  # Options: auto, cpu, cuda, mps
+  num_workers: 4
+  pin_memory: true
+  persistent_workers: true
+  prefetch_factor: 2
+
+# Random seed configuration
+random_seeds:
+  global_seed: 42
+  torch_seed: 42
+  numpy_seed: 42
+  random_seed: 42
+  deterministic: true
+  benchmark: false
+
+# Development configuration
+development:
+  debug_mode: false
+  profile_memory: false
+  profile_time: false
+  save_checkpoints: true
+  checkpoint_frequency: 100  # iterations
+  early_stopping:
+    enabled: true
+    patience: 50
+    min_delta: 1e-4
