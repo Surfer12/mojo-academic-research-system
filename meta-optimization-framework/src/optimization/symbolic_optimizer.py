@@ -19,7 +19,7 @@ import re
 from collections import defaultdict
 import networkx as nx
 
-from ..core.meta_optimization import TaskSpecification, OptimizationResult
+from src.core.meta_optimization import TaskSpecification, OptimizationResult
 from ..utils.statistical_analysis import StatisticalAnalyzer
 
 

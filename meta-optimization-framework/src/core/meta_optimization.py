@@ -18,11 +18,11 @@ from dataclasses import dataclass
 import logging
 from abc import ABC, abstractmethod
 
-from .dynamic_integration import DynamicIntegrator
-from .cognitive_regularization import CognitiveRegularizer
-from .bias_modeling import BiasModeler
-from ..utils.statistical_analysis import ConfidenceInterval, EffectSize
-from ..utils.failure_documentation import FailureDocumenter
+from src.core.dynamic_integration import DynamicIntegrator
+from src.core.cognitive_regularization import CognitiveRegularizer
+from src.core.bias_modeling import BiasModeler
+from src.utils.statistical_analysis import ConfidenceInterval, EffectSize
+from src.utils.failure_documentation import FailureDocumenter
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

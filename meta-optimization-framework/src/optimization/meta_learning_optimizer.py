@@ -17,7 +17,8 @@ import logging
 from pathlib import Path
 import json
 
-from ..core.meta_optimization import TaskSpecification, OptimizationResult
+from src.core.meta_optimization import TaskSpecification, OptimizationResult
+
 from ..utils.statistical_analysis import StatisticalAnalyzer
 
 

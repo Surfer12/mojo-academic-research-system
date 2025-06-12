@@ -16,11 +16,11 @@ Core Components:
 - StatisticalValidator: Statistical significance testing
 """
 
-from .performance_evaluator import PerformanceEvaluator
-from .cognitive_metrics import CognitiveMetrics
-from .efficiency_analyzer import EfficiencyAnalyzer
-from .benchmark_suite import BenchmarkSuite
-from .statistical_validator import StatisticalValidator
+from src.evaluation.performance_evaluator import PerformanceEvaluator
+from src.evaluation.cognitive_metrics import CognitiveMetrics
+from src.evaluation.efficiency_analyzer import EfficiencyAnalyzer
+from src.evaluation.benchmark_suite import BenchmarkSuite
+from src.evaluation.statistical_validator import StatisticalValidator
 
 __all__ = [
     'PerformanceEvaluator',

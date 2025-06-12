@@ -15,8 +15,8 @@ import logging
 from pathlib import Path
 import json
 
-from ..utils.data_processing import DataProcessor
-from .cognitive_metrics import CognitiveTaskType
+from src.utils.data_processing import DataProcessor
+from src.evaluation.cognitive_metrics import CognitiveTaskType
 
 
 class BenchmarkCategory(Enum):

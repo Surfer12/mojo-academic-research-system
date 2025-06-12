@@ -17,7 +17,7 @@ import torch
 from pathlib import Path
 import logging
 
-from ..utils.statistical_analysis import StatisticalAnalyzer
+from src.utils.statistical_analysis import StatisticalAnalyzer
 
 
 @dataclass

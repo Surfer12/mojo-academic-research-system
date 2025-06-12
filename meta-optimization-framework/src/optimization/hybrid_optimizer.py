@@ -19,7 +19,7 @@ from scipy.optimize import differential_evolution
 from sklearn.gaussian_process import GaussianProcessRegressor
 from sklearn.gaussian_process.kernels import Matern
 
-from ..core.meta_optimization import TaskSpecification, OptimizationResult
+from src.core.meta_optimization import TaskSpecification, OptimizationResult
 from ..utils.statistical_analysis import StatisticalAnalyzer
 from .adaptive_optimizer import AdaptiveOptimizer, AdaptationStrategy
 

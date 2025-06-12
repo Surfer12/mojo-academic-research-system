@@ -13,7 +13,7 @@ from dataclasses import dataclass
 from enum import Enum
 import logging
 
-from ..utils.data_processing import DataProcessor
+from src.utils.data_processing import DataProcessor
 
 
 class CognitiveTaskType(Enum):

@@ -23,16 +23,16 @@ from typing import Dict, Any, List, Optional
 # Add src to path for imports
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
-from core.meta_optimization import MetaOptimizer, TaskSpecification
-from evaluation import (
+from src.core.meta_optimization import MetaOptimizer, TaskSpecification
+from src.evaluation import (
     PerformanceEvaluator, 
     BenchmarkSuite, 
     StatisticalValidator,
     BenchmarkCategory
 )
-from optimization.adaptive_optimizer import AdaptiveOptimizer
-from utils.data_processing import DataProcessor
-from utils.failure_documentation import FailureDocumenter
+from src.optimization.adaptive_optimizer import AdaptiveOptimizer
+from src.utils.data_processing import DataProcessor
+from src.utils.failure_documentation import FailureDocumenter
 
 
 def setup_logging(log_level: str = "INFO", log_file: Optional[Path] = None) -> None:

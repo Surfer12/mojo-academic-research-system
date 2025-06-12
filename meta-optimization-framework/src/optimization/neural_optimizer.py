@@ -19,7 +19,7 @@ import logging
 from pathlib import Path
 from collections import deque
 
-from ..core.meta_optimization import TaskSpecification, OptimizationResult
+from src.core.meta_optimization import TaskSpecification, OptimizationResult
 from ..utils.statistical_analysis import StatisticalAnalyzer
 
 

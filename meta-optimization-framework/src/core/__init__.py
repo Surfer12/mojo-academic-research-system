@@ -13,7 +13,7 @@ Components:
 - BiasModeler: Human-like bias simulation (β parameter)
 """
 
-from .meta_optimization import (
+from src.core.meta_optimization import (
     MetaOptimizer,
     TaskSpecification,
     OptimizationResult,
@@ -23,9 +23,9 @@ from .meta_optimization import (
     CognitiveNeuralProcessor,
 )
 
-from .dynamic_integration import DynamicIntegrator
+from src.core.dynamic_integration import DynamicIntegrator
 
-from .cognitive_regularization import (
+from src.core.cognitive_regularization import (
     CognitiveRegularizer,
     CognitiveConstraint,
     WorkingMemoryConstraint,
@@ -34,7 +34,7 @@ from .cognitive_regularization import (
     BiasConsistencyConstraint,
 )
 
-from .bias_modeling import (
+from src.core.bias_modeling import (
     BiasModeler,
     CognitiveBias,
     BiasType,

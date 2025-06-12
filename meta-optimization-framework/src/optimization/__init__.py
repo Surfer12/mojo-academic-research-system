@@ -14,12 +14,12 @@ Core Components:
 - SymbolicOptimizer: Symbolic reasoning-based optimization
 """
 
-from .adaptive_optimizer import AdaptiveOptimizer
-from .meta_learning_optimizer import MetaLearningOptimizer
-from .hybrid_optimizer import HybridOptimizer
-from .cognitive_optimizer import CognitiveOptimizer
-from .neural_optimizer import NeuralOptimizer
-from .symbolic_optimizer import SymbolicOptimizer
+from src.optimization.adaptive_optimizer import AdaptiveOptimizer
+from src.optimization.cognitive_optimizer import CognitiveOptimizer
+from src.optimization.hybrid_optimizer import HybridOptimizer
+from src.optimization.meta_learning_optimizer import MetaLearningOptimizer
+from src.optimization.neural_optimizer import NeuralOptimizer
+from src.optimization.symbolic_optimizer import SymbolicOptimizer
 
 __all__ = [
     'AdaptiveOptimizer',

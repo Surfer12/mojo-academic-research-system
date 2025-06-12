@@ -35,16 +35,16 @@ __institution__ = "University of California, Santa Barbara"
 __license__ = "MIT"
 
 # Core framework imports
-from .core.meta_optimization import MetaOptimizer, TaskSpecification, OptimizationResult
-from .core.dynamic_integration import DynamicIntegrator
-from .core.cognitive_regularization import CognitiveRegularizer
-from .core.bias_modeling import BiasModeler, BiasType
+from src.core.meta_optimization import MetaOptimizer, TaskSpecification, OptimizationResult
+from src.core.dynamic_integration import DynamicIntegrator
+from src.core.cognitive_regularization import CognitiveRegularizer
+from src.core.bias_modeling import BiasModeler, BiasType
 
 # Utility imports
-from .utils.statistical_analysis import StatisticalAnalyzer, ConfidenceInterval, EffectSize
-from .utils.data_processing import DataProcessor
-from .utils.failure_documentation import FailureDocumenter
-from .utils.visualization import Visualizer
+from src.utils.statistical_analysis import StatisticalAnalyzer, ConfidenceInterval, EffectSize
+from src.utils.data_processing import DataProcessor
+from src.utils.failure_documentation import FailureDocumenter
+from src.utils.visualization import Visualizer
 
 # Export main classes and functions
 __all__ = [
