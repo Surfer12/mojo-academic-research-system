@@ -194,6 +194,26 @@ Remember to always maintain the core principle of **mandatory human oversight** 
 - Enhanced statistical analysis tools
 - Expanded domain coverage
 
+## Command Line Interface
+
+The repository includes a lightweight CLI wrapper to run the core Mojo modules.
+The script `scripts/cli.py` forwards commands to the `mojo` executable.
+
+```bash
+python scripts/cli.py <command> [-- <mojo args>]
+```
+
+Available commands:
+
+- `workflow`  – run `academic_research_workflow.mojo`
+- `match`     – run `pattern_matcher.mojo`
+- `validate`  – run `validation_system.mojo`
+- `config`    – run `research_config.mojo`
+- `example`   – run `example_usage.mojo`
+
+Arguments after `--` are passed directly to the Mojo script. Ensure the `mojo`
+binary is installed and reachable via `PATH` or set `MOJO_BIN` before running.
+
 ## Contributing
 
 This system is designed with extensibility in mind. Researchers can contribute:
