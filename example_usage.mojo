@@ -1,4 +1,12 @@
-from academic_research_workflow import create_oates_research_system, AcademicResearchWorkflow
+from academic_research_workflow import (
+    create_oates_research_system,
+    AcademicResearchWorkflow,
+    generate_manuscript_outline,
+    validate_manuscript,
+    create_ethics_compliance,
+    create_approval_workflow,
+    check_publication_readiness
+)
 from pattern_matcher import create_default_pattern_matcher, create_oates_signature
 from validation_system import create_cognitive_science_validation_system
 from research_config import (
@@ -76,7 +84,7 @@ fn demonstrate_manuscript_development():
     research_data["co_authors"] = "Chen, S., Rodriguez, E."
 
     # Generate manuscript outline
-    var manuscript = workflow.generate_manuscript_outline(research_data, "Consciousness and Cognition")
+    var manuscript = generate_manuscript_outline(workflow.author_profile, research_data, "Consciousness and Cognition")
 
     print("Generated manuscript:")
     print("  Title: " + manuscript.title)
@@ -84,9 +92,8 @@ fn demonstrate_manuscript_development():
     print("  Status: " + manuscript.publication_status)
     print("  Framework: " + manuscript.theoretical_framework)
 
-    # Add to workflow
-    # Store manuscript in workflow - implementation depends on workflow structure
-    print("  Manuscript stored in workflow system")
+    # Note: In simplified version, workflow state is immutable
+    print("  Manuscript created (workflow state is immutable)")
 
 fn demonstrate_validation_process():
     """Demonstrates validation and review process"""
@@ -150,7 +157,7 @@ fn demonstrate_ethics_and_approval():
     var paper_id = "paper_dmn_001"
 
     # Create ethics compliance record
-    var ethics = workflow.create_ethics_compliance_record(paper_id)
+    var ethics = create_ethics_compliance()
     print("Ethics compliance record created for paper: " + paper_id)
 
     # Show required ethics components
@@ -167,22 +174,25 @@ fn demonstrate_ethics_and_approval():
     approvers.append("dept_chair_smith")
     approvers.append("irb_committee")
 
-    var approval_workflow = workflow.initiate_approval_workflow(paper_id, approvers)
+    var approval_workflow = create_approval_workflow(paper_id, approvers, 14)
     print("\nApproval workflow initiated:")
-    print("  Workflow ID: generated")
-    print("  Required approvers: multiple")
-    print("  Timeout: configured")
+    print("  Workflow ID: " + approval_workflow.workflow_id)
+    print("  Required approvers: " + String(approvers.__len__()))
+    print("  Timeout: " + String(approval_workflow.timeout_days) + " days")
 
-    # Simulate some approvals (in practice, these would come from UI/API)
-    print("\nSimulating approval decisions...")
-    workflow.record_approval_decision(approval_workflow.workflow_id, "oates_r", "approved")
-    workflow.record_approval_decision(approval_workflow.workflow_id, "chen_s", "approved")
-    workflow.record_approval_decision(approval_workflow.workflow_id, "rodriguez_e", "approved")
+    # Note: In simplified version, we can't modify approval status
+    print("\nNote: Approval recording is simplified in this version")
 
     # Check publication readiness
-    var readiness = workflow.check_publication_readiness(paper_id)
-    print("\nPublication Readiness:")
-    print("  Publication readiness checked")
+    # Create sample paper for demo
+    var sample_paper = generate_manuscript_outline(
+        workflow.author_profile,
+        Dict[String, String](),
+        "Sample Journal"
+    )
+    var validation_report = validate_manuscript(sample_paper)
+    var ready = check_publication_readiness(sample_paper, validation_report, ethics)
+    print("\nPublication Readiness: " + String(ready))
     print("  All requirements evaluated")
 
 fn demonstrate_safety_measures():
