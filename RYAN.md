@@ -1,5 +1,16 @@
 # Ryan's Notes
 
+magic run mojo pattern_matcher.mojo
+
+```
+Pattern matcher module loaded
+Matcher created with cache enabled: True
+Created signature: oates_r
+Found matches: 0
+Confidence: 0.0
+Pattern matcher test complete
+```
+
 Change all relative imports in your src directory to absolute imports
 
 /Users/ryandavidoates/mojo-academic-research-system/meta-optimization-framework/src
@@ -52,7 +63,7 @@ __version__ = "0.1.0"
 
 Then in README.md:
 
-> **Note on namespace packages:**  
+> **Note on namespace packages:**
 > Python 3.3+ can treat a directory without `__init__.py` as a *namespace
 > package* (PEP 420). We keep an explicit file because it plays nicely with
 > IDE static analysers and simplifies future PyPI packaging.

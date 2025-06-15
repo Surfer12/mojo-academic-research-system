@@ -56,7 +56,7 @@ fn main():
 
     # Create matcher with named arguments
     var matcher = PatternMatcher(pattern_count=0, cache_enabled=True)
-    print("Matcher created with cache enabled: " + str(matcher.cache_enabled))
+    print("Matcher created with cache enabled: " + String(matcher.cache_enabled))
 
     # Create signature
     var signature = create_oates_signature()
@@ -65,10 +65,10 @@ fn main():
     # Test pattern matching
     var text = "Test text"
     var matches = match_patterns(text, signature)
-    print("Found matches: " + str(matches))
+    print("Found matches: " + String(matches))
 
     # Test confidence calculation
     var confidence = calculate_aggregate_confidence(matches, signature)
-    print("Confidence: " + str(confidence))
+    print("Confidence: " + String(confidence))
 
     print("Pattern matcher test complete")
