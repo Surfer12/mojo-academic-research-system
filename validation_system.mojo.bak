@@ -1,6 +1,5 @@
 from python import Python
-# TODO: Fix tensor import - check if Tensor is available in current Mojo version
-# from tensor import Tensor
+from tensor import Tensor
 from collections import Dict, List
 from algorithm import vectorize, parallelize
 import time
@@ -25,15 +24,6 @@ struct PeerReviewer:
         self.review_count = 0
         self.avg_review_time_days = 14.0
 
-    fn __copyinit__(inout self, existing: Self):
-        self.reviewer_id = existing.reviewer_id
-        self.name = existing.name
-        self.expertise_areas = existing.expertise_areas
-        self.institution = existing.institution
-        self.h_index = existing.h_index
-        self.review_count = existing.review_count
-        self.avg_review_time_days = existing.avg_review_time_days
-
 struct ReviewCriteria:
     var criterion_id: String
     var name: String
@@ -52,14 +42,6 @@ struct ReviewCriteria:
         self.required = required
         self.evaluation_scale = scale
 
-    fn __copyinit__(inout self, existing: Self):
-        self.criterion_id = existing.criterion_id
-        self.name = existing.name
-        self.description = existing.description
-        self.weight = existing.weight
-        self.required = existing.required
-        self.evaluation_scale = existing.evaluation_scale
-
 struct ReviewEvaluation:
     var criterion_id: String
     var score: Int
@@ -73,13 +55,6 @@ struct ReviewEvaluation:
         self.comments = ""
         self.suggestions = List[String]()
         self.critical_issues = List[String]()
-
-    fn __copyinit__(inout self, existing: Self):
-        self.criterion_id = existing.criterion_id
-        self.score = existing.score
-        self.comments = existing.comments
-        self.suggestions = existing.suggestions
-        self.critical_issues = existing.critical_issues
 
 struct PeerReview:
     var review_id: String
@@ -102,17 +77,6 @@ struct PeerReview:
         self.evaluations = List[ReviewEvaluation]()
         self.general_comments = ""
         self.revision_requirements = List[String]()
-
-    fn __copyinit__(inout self, existing: Self):
-        self.review_id = existing.review_id
-        self.paper_id = existing.paper_id
-        self.reviewer_id = existing.reviewer_id
-        self.review_date = existing.review_date
-        self.overall_recommendation = existing.overall_recommendation
-        self.confidence_level = existing.confidence_level
-        self.evaluations = existing.evaluations
-        self.general_comments = existing.general_comments
-        self.revision_requirements = existing.revision_requirements
 
 struct StatisticalValidation:
     var paper_id: String
@@ -140,19 +104,6 @@ struct StatisticalValidation:
         self.validation_score = 0.0
         self.issues = List[String]()
 
-    fn __copyinit__(inout self, existing: Self):
-        self.paper_id = existing.paper_id
-        self.sample_size_adequate = existing.sample_size_adequate
-        self.power_analysis_provided = existing.power_analysis_provided
-        self.statistical_tests_appropriate = existing.statistical_tests_appropriate
-        self.multiple_comparisons_corrected = existing.multiple_comparisons_corrected
-        self.effect_sizes_reported = existing.effect_sizes_reported
-        self.confidence_intervals_provided = existing.confidence_intervals_provided
-        self.assumptions_tested = existing.assumptions_tested
-        self.outliers_addressed = existing.outliers_addressed
-        self.validation_score = existing.validation_score
-        self.issues = existing.issues
-
 struct ReproducibilityCheck:
     var paper_id: String
     var data_available: Bool
@@ -179,19 +130,6 @@ struct ReproducibilityCheck:
         self.protocol_detailed = False
         self.reproducibility_score = 0.0
 
-    fn __copyinit__(inout self, existing: Self):
-        self.paper_id = existing.paper_id
-        self.data_available = existing.data_available
-        self.data_format_documented = existing.data_format_documented
-        self.code_available = existing.code_available
-        self.code_documented = existing.code_documented
-        self.environment_specified = existing.environment_specified
-        self.analysis_steps_clear = existing.analysis_steps_clear
-        self.results_reproducible = existing.results_reproducible
-        self.materials_available = existing.materials_available
-        self.protocol_detailed = existing.protocol_detailed
-        self.reproducibility_score = existing.reproducibility_score
-
 struct QualityMetrics:
     var clarity_score: Float32
     var originality_score: Float32
@@ -209,15 +147,6 @@ struct QualityMetrics:
         self.presentation_score = 0.0
         self.references_score = 0.0
         self.overall_quality = 0.0
-
-    fn __copyinit__(inout self, existing: Self):
-        self.clarity_score = existing.clarity_score
-        self.originality_score = existing.originality_score
-        self.significance_score = existing.significance_score
-        self.methodology_score = existing.methodology_score
-        self.presentation_score = existing.presentation_score
-        self.references_score = existing.references_score
-        self.overall_quality = existing.overall_quality
 
 struct ValidationSystem:
     var review_criteria: List[ReviewCriteria]
@@ -385,7 +314,7 @@ struct ValidationSystem:
     
     fn create_peer_review(inout self, paper_id: String, reviewer_id: String) -> PeerReview:
         """Creates a new peer review instance"""
-        var review_id = String(hash(paper_id + reviewer_id + String(time.time())))
+        var review_id = str(hash(paper_id + reviewer_id + str(time.time())))
         var review = PeerReview(review_id, paper_id, reviewer_id)
         
         # Initialize evaluations for each criterion
@@ -656,7 +585,7 @@ struct ValidationSystem:
             decision["recommendation"] = "minor_revision"
         
         decision["status"] = "review_complete"
-        decision["review_count"] = String(len(reviews))
+        decision["review_count"] = str(len(reviews))
         
         return decision
 
@@ -692,16 +621,4 @@ fn create_cognitive_science_validation_system() -> ValidationSystem:
     reviewer3.h_index = 28
     system.reviewer_pool["rev003"] = reviewer3
     
-
-    fn __copyinit__(inout self, existing: Self):
-        self.review_criteria = existing.review_criteria
-        self.reviewer_pool = existing.reviewer_pool
-        self.active_reviews = existing.active_reviews
-        self.statistical_validations = existing.statistical_validations
-        self.reproducibility_checks = existing.reproducibility_checks
-        self.quality_assessments = existing.quality_assessments
-        self.score = existing.score
-        self.max_score = existing.max_score
-        self.score = existing.score
-        self.max_score = existing.max_score
     return system

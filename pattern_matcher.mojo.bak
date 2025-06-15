@@ -1,6 +1,5 @@
 from algorithm import vectorize
-# TODO: Fix tensor import - check if Tensor is available in current Mojo version
-# from tensor import Tensor
+from tensor import Tensor
 from collections import Dict, List
 from utils.hash import hash
 import math
@@ -21,13 +20,6 @@ struct ResearchPattern:
         self.weight = weight
         self.context_window = context_window
 
-    fn __copyinit__(inout self, existing: Self):
-        self.pattern_id = existing.pattern_id
-        self.pattern_type = existing.pattern_type
-        self.keywords = existing.keywords
-        self.weight = existing.weight
-        self.context_window = existing.context_window
-
 struct PatternMatch:
     var pattern_id: String
     var confidence: Float32
@@ -43,13 +35,6 @@ struct PatternMatch:
         self.context = context
         self.matched_keywords = List[String]()
 
-    fn __copyinit__(inout self, existing: Self):
-        self.pattern_id = existing.pattern_id
-        self.confidence = existing.confidence
-        self.location = existing.location
-        self.context = existing.context
-        self.matched_keywords = existing.matched_keywords
-
 struct ResearchSignature:
     var author_name: String
     var signature_patterns: List[ResearchPattern]
@@ -61,12 +46,6 @@ struct ResearchSignature:
         self.signature_patterns = List[ResearchPattern]()
         self.minimum_confidence = min_confidence
         self.combination_rules = Dict[String, List[String]]()
-
-    fn __copyinit__(inout self, existing: Self):
-        self.author_name = existing.author_name
-        self.signature_patterns = existing.signature_patterns
-        self.minimum_confidence = existing.minimum_confidence
-        self.combination_rules = existing.combination_rules
 
 struct PatternMatcher:
     var signatures: Dict[String, ResearchSignature]
@@ -260,9 +239,7 @@ struct PatternMatcher:
         var total_score: Float32 = 0.0
         var total_weight: Float32 = 0.0
         
-        for entry in pattern_scores.items():
-        var pattern_id = entry.key
-        var score = entry.value
+        for pattern_id, score in pattern_scores.items():
             total_score += score
             total_weight += 1.0
         
@@ -296,9 +273,7 @@ struct PatternMatcher:
         # Set primary domain
         var max_count = 0
         var primary_domain = "general_cognitive_science"
-        for entry in domain_indicators.items():
-        var domain = entry.key
-        var count = entry.value
+        for domain, count in domain_indicators.items():
             if count > max_count:
                 max_count = count
                 primary_domain = domain
@@ -363,13 +338,4 @@ fn create_default_pattern_matcher() -> PatternMatcher:
     var matcher = PatternMatcher()
     var oates_signature = matcher.create_oates_signature()
     matcher.signatures["oates_r"] = oates_signature
-
-    fn __copyinit__(inout self, existing: Self):
-        self.signatures = existing.signatures
-        self.pattern_cache = existing.pattern_cache
-        self.text_embeddings = existing.text_embeddings
-        self.base_confidence = existing.base_confidence
-        self.combination_bonus = existing.combination_bonus
-        self.total_score = existing.total_score
-        self.total_weight = existing.total_weight
     return matcher

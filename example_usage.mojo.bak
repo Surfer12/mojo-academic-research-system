@@ -41,11 +41,11 @@ fn demonstrate_research_identification():
     
     # Find pattern matches
     var matches = matcher.match_patterns(sample_text, oates_signature)
-    print("Found " + String(len(matches)) + " pattern matches")
+    print("Found " + str(len(matches)) + " pattern matches")
     
     # Calculate confidence
     var confidence = matcher.calculate_aggregate_confidence(matches, oates_signature)
-    print("Authorship confidence: " + String(confidence))
+    print("Authorship confidence: " + str(confidence))
     
     # Extract metadata
     var metadata = matcher.extract_research_metadata(sample_text, matches)
@@ -54,7 +54,7 @@ fn demonstrate_research_identification():
     
     # Verify author contribution
     var is_author = matcher.identify_author_contribution(sample_text, "Oates, R.")
-    print("Author contribution verified: " + String(is_author))
+    print("Author contribution verified: " + str(is_author))
 
 fn demonstrate_manuscript_development():
     """Demonstrates manuscript development workflow"""
@@ -116,26 +116,26 @@ fn demonstrate_validation_process():
     # Perform statistical validation
     var stat_validation = validation_system.validate_statistics(paper_id, paper_content)
     print("Statistical Validation:")
-    print("  Sample size adequate: " + String(stat_validation.sample_size_adequate))
-    print("  Power analysis provided: " + String(stat_validation.power_analysis_provided))
-    print("  Effect sizes reported: " + String(stat_validation.effect_sizes_reported))
-    print("  Multiple comparisons corrected: " + String(stat_validation.multiple_comparisons_corrected))
-    print("  Overall score: " + String(stat_validation.validation_score))
+    print("  Sample size adequate: " + str(stat_validation.sample_size_adequate))
+    print("  Power analysis provided: " + str(stat_validation.power_analysis_provided))
+    print("  Effect sizes reported: " + str(stat_validation.effect_sizes_reported))
+    print("  Multiple comparisons corrected: " + str(stat_validation.multiple_comparisons_corrected))
+    print("  Overall score: " + str(stat_validation.validation_score))
     
     # Check reproducibility
     var repro_check = validation_system.check_reproducibility(paper_id, paper_content)
     print("\nReproducibility Check:")
-    print("  Data available: " + String(repro_check.data_available))
-    print("  Code available: " + String(repro_check.code_available))
-    print("  Environment specified: " + String(repro_check.environment_specified))
-    print("  Overall score: " + String(repro_check.reproducibility_score))
+    print("  Data available: " + str(repro_check.data_available))
+    print("  Code available: " + str(repro_check.code_available))
+    print("  Environment specified: " + str(repro_check.environment_specified))
+    print("  Overall score: " + str(repro_check.reproducibility_score))
     
     # Assess quality
     var quality = validation_system.assess_quality(paper_id, paper_content)
     print("\nQuality Assessment:")
-    print("  Clarity score: " + String(quality.clarity_score))
-    print("  Methodology score: " + String(quality.methodology_score))
-    print("  Overall quality: " + String(quality.overall_quality))
+    print("  Clarity score: " + str(quality.clarity_score))
+    print("  Methodology score: " + str(quality.methodology_score))
+    print("  Overall quality: " + str(quality.overall_quality))
 
 fn demonstrate_ethics_and_approval():
     """Demonstrates ethics compliance and approval workflow"""
@@ -154,30 +154,25 @@ fn demonstrate_ethics_and_approval():
     
     # Show required ethics components
     print("\nRequired Ethics Components:")
-    for entry in ethics_guidelines.items():
-        var guideline_name = entry.key
-        var guideline = entry.value
+    for guideline_name, guideline in ethics_guidelines.items():
         print("  " + guideline.guideline_name + ":")
-        print("    Mandatory: " + String(guideline.mandatory))
+        print("    Mandatory: " + str(guideline.mandatory))
         print("    Review process: " + guideline.review_process)
     
     # Initiate approval workflow
-    var approvers = List[String]()
-    approvers.append("oates_r")
-    approvers.append(# Primary author
-        "chen_s")
-    approvers.append(# Co-author 1
-        "rodriguez_e")
-    approvers.append(# Co-author 2
-        "dept_chair_smith")
-    approvers.append(# Department chair
-        "irb_committee"  # Ethics board)
+    var approvers = List[String](
+        "oates_r",  # Primary author
+        "chen_s",   # Co-author 1
+        "rodriguez_e",  # Co-author 2
+        "dept_chair_smith",  # Department chair
+        "irb_committee"  # Ethics board
+    )
     
     var approval_workflow = workflow.initiate_approval_workflow(paper_id, approvers, 14)
     print("\nApproval workflow initiated:")
     print("  Workflow ID: " + approval_workflow.workflow_id)
-    print("  Required approvers: " + String(len(approvers)))
-    print("  Timeout: " + String(approval_workflow.timeout_days) + " days")
+    print("  Required approvers: " + str(len(approvers)))
+    print("  Timeout: " + str(approval_workflow.timeout_days) + " days")
     
     # Simulate some approvals (in practice, these would come from UI/API)
     print("\nSimulating approval decisions...")
@@ -188,10 +183,8 @@ fn demonstrate_ethics_and_approval():
     # Check publication readiness
     var readiness = workflow.check_publication_readiness(paper_id)
     print("\nPublication Readiness:")
-    for entry in readiness.items():
-        var check = entry.key
-        var status = entry.value
-        print("  " + check + ": " + String(status))
+    for check, status in readiness.items():
+        print("  " + check + ": " + str(status))
 
 fn demonstrate_safety_measures():
     """Demonstrates safety measures and human oversight"""
@@ -200,11 +193,11 @@ fn demonstrate_safety_measures():
     # Get workflow configuration
     var config = get_default_config()
     print("Default Workflow Configuration:")
-    print("  Minimum reviewers: " + String(config.min_reviewers))
-    print("  Require unanimous approval: " + String(config.require_unanimous_approval))
-    print("  Approval timeout: " + String(config.approval_timeout_days) + " days")
-    print("  Revision cycles allowed: " + String(config.allow_revision_cycles))
-    print("  Audit trail enabled: " + String(config.audit_trail_enabled))
+    print("  Minimum reviewers: " + str(config.min_reviewers))
+    print("  Require unanimous approval: " + str(config.require_unanimous_approval))
+    print("  Approval timeout: " + str(config.approval_timeout_days) + " days")
+    print("  Revision cycles allowed: " + str(config.allow_revision_cycles))
+    print("  Audit trail enabled: " + str(config.audit_trail_enabled))
     
     # Validate configuration
     var is_valid = validate_configuration(config)
@@ -213,9 +206,7 @@ fn demonstrate_safety_measures():
     # Show safeguards
     var safeguards = create_workflow_safeguards()
     print("\nWorkflow Safeguards:")
-    for entry in safeguards.items():
-        var safeguard = entry.key
-        var setting = entry.value
+    for safeguard, setting in safeguards.items():
         print("  " + safeguard + ": " + setting)
     
     print("\n⚠️  CRITICAL SAFEGUARDS:")
@@ -231,13 +222,11 @@ fn demonstrate_journal_requirements():
     
     var journals = create_journal_requirements()
     
-    for entry in journals.items():
-        var journal_key = entry.key
-        var requirements = entry.value
+    for journal_key, requirements in journals.items():
         print("\n" + requirements.journal_name + ":")
         print("  Submission format: " + requirements.submission_format)
         print("  Peer review type: " + requirements.peer_review_type)
-        print("  Open access: " + String(requirements.open_access))
+        print("  Open access: " + str(requirements.open_access))
         print("  Data sharing policy: " + requirements.data_sharing_policy)
         print("  Ethics requirements:")
         for req in requirements.ethics_requirements:

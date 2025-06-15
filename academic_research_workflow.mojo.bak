@@ -1,7 +1,6 @@
 from python import Python
 from algorithm import vectorize, parallelize
-# TODO: Fix tensor import - check if Tensor is available in current Mojo version
-# from tensor import Tensor
+from tensor import Tensor
 from utils.hash import hash
 from collections import Dict, List
 import time
@@ -23,14 +22,6 @@ struct AuthorProfile:
         self.theoretical_frameworks = frameworks
         self.institution = institution
         self.orcid_id = orcid_id
-
-    fn __copyinit__(inout self, existing: Self):
-        self.name = existing.name
-        self.research_domains = existing.research_domains
-        self.methodological_signatures = existing.methodological_signatures
-        self.theoretical_frameworks = existing.theoretical_frameworks
-        self.institution = existing.institution
-        self.orcid_id = existing.orcid_id
 
 struct ResearchPaper:
     var title: String
@@ -54,17 +45,6 @@ struct ResearchPaper:
         self.ethics_approval = ""
         self.publication_status = "draft"
 
-    fn __copyinit__(inout self, existing: Self):
-        self.title = existing.title
-        self.abstract = existing.abstract
-        self.authors = existing.authors
-        self.keywords = existing.keywords
-        self.methodology = existing.methodology
-        self.theoretical_framework = existing.theoretical_framework
-        self.data_availability = existing.data_availability
-        self.ethics_approval = existing.ethics_approval
-        self.publication_status = existing.publication_status
-
 struct ValidationReport:
     var paper_id: String
     var validation_timestamp: Int
@@ -85,16 +65,6 @@ struct ValidationReport:
         self.human_approval_required = True
         self.reviewer_comments = List[String]()
 
-    fn __copyinit__(inout self, existing: Self):
-        self.paper_id = existing.paper_id
-        self.validation_timestamp = existing.validation_timestamp
-        self.peer_review_status = existing.peer_review_status
-        self.statistical_validation = existing.statistical_validation
-        self.reproducibility_check = existing.reproducibility_check
-        self.ethical_compliance = existing.ethical_compliance
-        self.human_approval_required = existing.human_approval_required
-        self.reviewer_comments = existing.reviewer_comments
-
 struct EthicsCompliance:
     var irb_approval: Bool
     var participant_consent: Bool
@@ -112,15 +82,6 @@ struct EthicsCompliance:
         self.funding_disclosure = List[String]()
         self.author_consent = Dict[String, Bool]()
         self.institutional_approval = False
-
-    fn __copyinit__(inout self, existing: Self):
-        self.irb_approval = existing.irb_approval
-        self.participant_consent = existing.participant_consent
-        self.data_privacy_compliance = existing.data_privacy_compliance
-        self.conflict_of_interest = existing.conflict_of_interest
-        self.funding_disclosure = existing.funding_disclosure
-        self.author_consent = existing.author_consent
-        self.institutional_approval = existing.institutional_approval
 
 struct ApprovalWorkflow:
     var workflow_id: String
@@ -143,16 +104,6 @@ struct ApprovalWorkflow:
         self.completion_timestamp = 0
         self.final_decision = "pending"
 
-    fn __copyinit__(inout self, existing: Self):
-        self.workflow_id = existing.workflow_id
-        self.paper_id = existing.paper_id
-        self.required_approvers = existing.required_approvers
-        self.approval_status = existing.approval_status
-        self.timeout_days = existing.timeout_days
-        self.created_timestamp = existing.created_timestamp
-        self.completion_timestamp = existing.completion_timestamp
-        self.final_decision = existing.final_decision
-
 struct ResearchCluster:
     var cluster_id: String
     var theme: String
@@ -168,14 +119,6 @@ struct ResearchCluster:
         self.key_concepts = List[String]()
         self.theoretical_connections = List[String]()
         self.methodological_patterns = List[String]()
-
-    fn __copyinit__(inout self, existing: Self):
-        self.cluster_id = existing.cluster_id
-        self.theme = existing.theme
-        self.papers = existing.papers
-        self.key_concepts = existing.key_concepts
-        self.theoretical_connections = existing.theoretical_connections
-        self.methodological_patterns = existing.methodological_patterns
 
 struct AcademicResearchWorkflow:
     var author_profile: AuthorProfile
@@ -259,7 +202,7 @@ struct AcademicResearchWorkflow:
             var theme = self._identify_primary_theme(paper)
             if theme not in clusters:
                 var cluster = ResearchCluster(
-                    cluster_id=String(hash(theme)),
+                    cluster_id=str(hash(theme)),
                     theme=theme
                 )
                 clusters[theme] = cluster
@@ -403,7 +346,7 @@ struct AcademicResearchWorkflow:
                                  approvers: List[String], 
                                  timeout_days: Int = 7) -> ApprovalWorkflow:
         """Initiates human approval workflow"""
-        var workflow_id = String(hash(paper_id + String(time.time())))
+        var workflow_id = str(hash(paper_id + str(time.time())))
         var workflow = ApprovalWorkflow(workflow_id, paper_id, approvers, timeout_days)
         
         # Initialize approval status for each approver
@@ -528,20 +471,12 @@ fn create_oates_research_system() -> AcademicResearchWorkflow:
     """Creates research workflow system for Oates R with specific focus areas"""
     var oates_profile = AuthorProfile(
         name="Oates, R.",
-        domains = List[String]()
-    domains.append("cognitive neuroscience")
-    domains.append("mind-wandering")
-    domains.append("attention dynamics")
-    domains.append("consciousness"),
-        signatures = List[String]()
-    signatures.append("recursive analysis")
-    signatures.append("fractal patterns")
-    signatures.append("DMN dynamics")
-    signatures.append("meta-awareness"),
-        frameworks = List[String]()
-    frameworks.append("recursive cognition")
-    frameworks.append("attention-recognition decoupling")
-    frameworks.append("fractal meta-awareness"),
+        domains=List[String]("cognitive neuroscience", "mind-wandering", 
+                           "attention dynamics", "consciousness"),
+        signatures=List[String]("recursive analysis", "fractal patterns", 
+                              "DMN dynamics", "meta-awareness"),
+        frameworks=List[String]("recursive cognition", "attention-recognition decoupling", 
+                              "fractal meta-awareness"),
         institution="Independent Researcher",
         orcid_id="0000-0000-0000-0001"
     )
@@ -576,36 +511,24 @@ fn main():
     print("Status: " + manuscript.publication_status)
     
     # Create ethics compliance record
-    var paper_id = String(hash(manuscript.title))
+    var paper_id = str(hash(manuscript.title))
     var ethics = workflow.create_ethics_compliance_record(paper_id)
     print("\nEthics compliance record created - awaiting approvals")
     
     # Initiate human approval workflow
-    var approvers = List[String]()
-    approvers.append("primary_author")
-    approvers.append("co_author_1")
-    approvers.append("co_author_2")
-    approvers.append("department_chair")
-    approvers.append("ethics_board")
+    var approvers = List[String]("primary_author", "co_author_1", "co_author_2", 
+                                "department_chair", "ethics_board")
     var approval_workflow = workflow.initiate_approval_workflow(paper_id, approvers, 14)
-    print("\nApproval workflow initiated with " + String(len(approvers)) + " required approvers")
+    print("\nApproval workflow initiated with " + str(len(approvers)) + " required approvers")
     print("Workflow ID: " + approval_workflow.workflow_id)
     
     # Check publication readiness
     var readiness = workflow.check_publication_readiness(paper_id)
     print("\nPublication Readiness Check:")
-    print("- Validation Complete: " + String(readiness["validation_complete"]))
-    print("- Ethics Approved: " + String(readiness["ethics_approved"]))
-    print("- Human Approval: " + String(readiness["human_approval"]))
-    print("- Ready for Publication: " + String(readiness["ready_for_publication"]))
+    print("- Validation Complete: " + str(readiness["validation_complete"]))
+    print("- Ethics Approved: " + str(readiness["ethics_approved"]))
+    print("- Human Approval: " + str(readiness["human_approval"]))
+    print("- Ready for Publication: " + str(readiness["ready_for_publication"]))
     
     print("\n⚠️  REMINDER: No publication will proceed without explicit human approval")
-
-    fn __copyinit__(inout self, existing: Self):
-        self.author_profile = existing.author_profile
-        self.research_papers = existing.research_papers
-        self.validation_reports = existing.validation_reports
-        self.ethics_compliance = existing.ethics_compliance
-        self.approval_workflows = existing.approval_workflows
-        self.research_clusters = existing.research_clusters
     print("This system is designed to assist, not replace, human academic judgment")

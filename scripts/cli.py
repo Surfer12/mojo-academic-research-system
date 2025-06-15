@@ -5,12 +5,17 @@ import subprocess
 import os
 import sys
 
+# Get the directory where this script is located
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+# Get the parent directory (mojo-academic-research-system)
+PROJECT_ROOT = os.path.dirname(SCRIPT_DIR)
+
 MOJO_FILES = {
-    "workflow": "academic_research_workflow.mojo",
-    "match": "pattern_matcher.mojo",
-    "validate": "validation_system.mojo",
-    "config": "research_config.mojo",
-    "example": "example_usage.mojo",
+    "workflow": os.path.join(PROJECT_ROOT, "academic_research_workflow.mojo"),
+    "match": os.path.join(PROJECT_ROOT, "pattern_matcher.mojo"),
+    "validate": os.path.join(PROJECT_ROOT, "validation_system.mojo"),
+    "config": os.path.join(PROJECT_ROOT, "research_config.mojo"),
+    "example": os.path.join(PROJECT_ROOT, "example_usage.mojo"),
 }
 
 MOJO_BIN = os.environ.get("MOJO_BIN", "mojo")
