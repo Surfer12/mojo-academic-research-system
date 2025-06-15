@@ -1,5 +1,5 @@
 from academic_research_workflow import create_oates_research_system, AcademicResearchWorkflow
-from pattern_matcher import create_default_pattern_matcher
+from pattern_matcher import create_default_pattern_matcher, create_oates_signature
 from validation_system import create_cognitive_science_validation_system
 from research_config import (
     create_cognitive_science_config,
@@ -37,7 +37,7 @@ fn demonstrate_research_identification():
     """
 
     # Get Oates signature
-    var oates_signature = matcher.signatures["oates_r"]
+    var oates_signature = create_oates_signature()
 
     # Find pattern matches
     var matches = matcher.match_patterns(sample_text, oates_signature)

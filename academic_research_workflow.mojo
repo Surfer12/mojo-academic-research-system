@@ -6,6 +6,7 @@ from utils.hash import hash
 from collections import Dict, List
 import time
 
+@value
 struct AuthorProfile:
     var name: String
     var research_domains: List[String]
@@ -14,24 +15,7 @@ struct AuthorProfile:
     var institution: String
     var orcid_id: String
 
-    fn __init__(inout self, name: String, domains: List[String],
-                signatures: List[String], frameworks: List[String],
-                institution: String, orcid_id: String):
-        self.name = name
-        self.research_domains = domains
-        self.methodological_signatures = signatures
-        self.theoretical_frameworks = frameworks
-        self.institution = institution
-        self.orcid_id = orcid_id
-
-    fn __copyinit__(self, existing: Self):
-        self.name = existing.name
-        self.research_domains = existing.research_domains
-        self.methodological_signatures = existing.methodological_signatures
-        self.theoretical_frameworks = existing.theoretical_frameworks
-        self.institution = existing.institution
-        self.orcid_id = existing.orcid_id
-
+@value
 struct ResearchPaper:
     var title: String
     var abstract: String
@@ -43,28 +27,7 @@ struct ResearchPaper:
     var ethics_approval: String
     var publication_status: String
 
-    fn __init__(self):
-        self.title = ""
-        self.abstract = ""
-        self.authors = List[String]()
-        self.keywords = List[String]()
-        self.methodology = ""
-        self.theoretical_framework = ""
-        self.data_availability = False
-        self.ethics_approval = ""
-        self.publication_status = "draft"
-
-    fn __copyinit__(inout self, existing: Self):
-        self.title = existing.title
-        self.abstract = existing.abstract
-        self.authors = existing.authors
-        self.keywords = existing.keywords
-        self.methodology = existing.methodology
-        self.theoretical_framework = existing.theoretical_framework
-        self.data_availability = existing.data_availability
-        self.ethics_approval = existing.ethics_approval
-        self.publication_status = existing.publication_status
-
+@value
 struct ValidationReport:
     var paper_id: String
     var validation_timestamp: Int
@@ -75,26 +38,7 @@ struct ValidationReport:
     var human_approval_required: Bool
     var reviewer_comments: List[String]
 
-    fn __init__(inout self, paper_id: String):
-        self.paper_id = paper_id
-        self.validation_timestamp = int(time.time())
-        self.peer_review_status = "pending"
-        self.statistical_validation = False
-        self.reproducibility_check = False
-        self.ethical_compliance = False
-        self.human_approval_required = True
-        self.reviewer_comments = List[String]()
-
-    fn __copyinit__(inout self, existing: Self):
-        self.paper_id = existing.paper_id
-        self.validation_timestamp = existing.validation_timestamp
-        self.peer_review_status = existing.peer_review_status
-        self.statistical_validation = existing.statistical_validation
-        self.reproducibility_check = existing.reproducibility_check
-        self.ethical_compliance = existing.ethical_compliance
-        self.human_approval_required = existing.human_approval_required
-        self.reviewer_comments = existing.reviewer_comments
-
+@value
 struct EthicsCompliance:
     var irb_approval: Bool
     var participant_consent: Bool
@@ -104,22 +48,7 @@ struct EthicsCompliance:
     var author_consent: Dict[String, Bool]
     var institutional_approval: Bool
 
-    fn __init__(inout self):
-        self.irb_approval = False
-        self.participant_consent = False
-        self.data_privacy_compliance = False
-        self.funding_disclosure = List[String]()
-        self.author_consent = Dict[String, Bool]()
-        self.institutional_approval = False
-
-    fn __copyinit__(inout self, existing: Self):
-        self.irb_approval = existing.irb_approval
-        self.participant_consent = existing.participant_consent
-        self.data_privacy_compliance = existing.data_privacy_compliance
-        self.funding_disclosure = existing.funding_disclosure
-        self.author_consent = existing.author_consent
-        self.institutional_approval = existing.institutional_approval
-
+@value
 struct ApprovalWorkflow:
     var workflow_id: String
     var paper_id: String
@@ -129,27 +58,6 @@ struct ApprovalWorkflow:
     var created_timestamp: Int
     var completion_timestamp: Int
     var final_decision: String
-
-    fn __init__(inout self, workflow_id: String, paper_id: String,
-                approvers: List[String], timeout_days: Int):
-        self.workflow_id = workflow_id
-        self.paper_id = paper_id
-        self.required_approvers = approvers
-        self.approval_status = Dict[String, String]()
-        self.timeout_days = timeout_days
-        self.created_timestamp = int(time.time())
-        self.completion_timestamp = 0
-        self.final_decision = "pending"
-
-    fn __copyinit__(inout self, existing: Self):
-        self.workflow_id = existing.workflow_id
-        self.paper_id = existing.paper_id
-        self.required_approvers = existing.required_approvers
-        self.approval_status = existing.approval_status
-        self.timeout_days = existing.timeout_days
-        self.created_timestamp = existing.created_timestamp
-        self.completion_timestamp = existing.completion_timestamp
-        self.final_decision = existing.final_decision
 
 struct ResearchCluster:
     var cluster_id: String

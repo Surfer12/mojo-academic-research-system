@@ -73,6 +73,18 @@ fn create_default_journal_config() -> JournalRequirements:
         ethics_requirement_count=2  # ethics_statement, conflict_of_interest_disclosure
     )
 
+fn create_ethics_guidelines() -> List[EthicalGuidelinesConfig]:
+    """Creates a list of ethics guidelines."""
+    var guidelines = List[EthicalGuidelinesConfig]()
+    guidelines.append(create_default_ethics_config())
+    return guidelines
+
+fn create_journal_requirements() -> List[JournalRequirements]:
+    """Creates a list of journal requirements."""
+    var requirements = List[JournalRequirements]()
+    requirements.append(create_default_journal_config())
+    return requirements
+
 fn create_workflow_safeguards() -> Dict[String, String]:
     """Creates workflow safeguard configurations."""
     var safeguards = Dict[String, String]()
