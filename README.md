@@ -11,6 +11,11 @@ This system provides tools to assist researchers like Oates R. in managing their
 - **Quality Assurance**: Multi-stage peer review and validation processes
 - **Reproducibility**: Support for open science practices and transparent methodologies
 
+## Dependencies
+
+Some components of this repository rely on [PyTorch](https://pytorch.org/). If PyTorch is not installed—such as on macOS systems without GPU support—the
+unit tests that require it will be skipped automatically. Installing PyTorch is recommended to access full functionality.
+
 ## Key Features
 
 ### 1. Research Identification & Organization
