@@ -6,7 +6,14 @@ MetaOptimizer class and its components.
 """
 
 import pytest
-import torch
+try:
+    import torch
+except ModuleNotFoundError:  # pragma: no cover - fallback for environments without PyTorch
+    torch = None
+    pytest.skip(
+        "PyTorch not available; skipping MetaOptimizer tests.",
+        allow_module_level=True,
+    )
 import numpy as np
 from unittest.mock import Mock, patch
 
